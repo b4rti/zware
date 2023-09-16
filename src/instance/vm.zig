@@ -1544,11 +1544,11 @@ pub const VirtualMachine = struct {
         const c1 = self.popOperand(f32);
 
         if (math.isNan(c1)) {
-            self.pushOperandNoCheck(f32, math.nan_f32);
+            self.pushOperandNoCheck(f32, math.nan(f32));
             return dispatch(self, ip + 1, code);
         }
         if (math.isNan(c2)) {
-            self.pushOperandNoCheck(f32, math.nan_f32);
+            self.pushOperandNoCheck(f32, math.nan(f32));
             return dispatch(self, ip + 1, code);
         }
 
@@ -1570,11 +1570,11 @@ pub const VirtualMachine = struct {
         const c1 = self.popOperand(f32);
 
         if (math.isNan(c1)) {
-            self.pushOperandNoCheck(f32, math.nan_f32);
+            self.pushOperandNoCheck(f32, math.nan(f32));
             return dispatch(self, ip + 1, code);
         }
         if (math.isNan(c2)) {
-            self.pushOperandNoCheck(f32, math.nan_f32);
+            self.pushOperandNoCheck(f32, math.nan(f32));
             return dispatch(self, ip + 1, code);
         }
 
@@ -1711,7 +1711,7 @@ pub const VirtualMachine = struct {
         const c1 = self.popOperand(f64);
 
         if (math.isNan(c1) or math.isNan(c2)) {
-            self.pushOperandNoCheck(f64, math.nan_f64);
+            self.pushOperandNoCheck(f64, std.math.nan(f64));
             return dispatch(self, ip + 1, code);
         }
 
@@ -1733,7 +1733,7 @@ pub const VirtualMachine = struct {
         const c1 = self.popOperand(f64);
 
         if (math.isNan(c1) or math.isNan(c2)) {
-            self.pushOperandNoCheck(f64, math.nan_f64);
+            self.pushOperandNoCheck(f64, math.nan(f64));
             return dispatch(self, ip + 1, code);
         }
 
