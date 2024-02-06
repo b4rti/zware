@@ -12,14 +12,14 @@ const Rr = @import("../rr.zig").Rr;
 
 const nan_f32 =
     if (@hasDecl(math, "nan"))
-        math.nan(f32)
-    else
-        math.nan_f32;
+    math.nan(f32)
+else
+    math.nan_f32;
 const nan_f64 =
     if (@hasDecl(math, "nan"))
-        math.nan(f64)
-    else
-        math.nan_f64;
+    math.nan(f64)
+else
+    math.nan_f64;
 
 // VirtualMachine:
 //
@@ -242,7 +242,7 @@ pub const VirtualMachine = struct {
 
         // The mem copy is equivalent of popping n operands, doing everything
         // up to and including popFrame and then repushing the n operands
-        var dst = self.op_stack[label.op_stack_len .. label.op_stack_len + n];
+        const dst = self.op_stack[label.op_stack_len .. label.op_stack_len + n];
         const src = self.op_stack[self.op_ptr - n .. self.op_ptr];
         mem.copy(u64, dst, src);
 
@@ -304,7 +304,7 @@ pub const VirtualMachine = struct {
 
     fn call_indirect(self: *VirtualMachine, ip: usize, code: []Rr) WasmError!void {
         const call_indirect_instruction = code[ip].call_indirect;
-        var module = self.inst.module;
+        const module = self.inst.module;
 
         const typeidx = call_indirect_instruction.typeidx;
         const tableidx = call_indirect_instruction.tableidx;

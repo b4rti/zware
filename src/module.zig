@@ -196,8 +196,8 @@ pub const Module = struct {
             }
             const results_end = self.pos();
 
-            var params = self.module[params_start..params_end];
-            var results = self.module[results_start..results_end];
+            const params = self.module[params_start..params_end];
+            const results = self.module[results_start..results_end];
 
             var params_valtype: []const ValType = undefined;
             params_valtype.ptr = @ptrCast(params.ptr);

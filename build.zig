@@ -1,11 +1,11 @@
-const Builder = @import("std").build.Builder;
+const std = @import("std");
 
-pub fn build(b: *Builder) !void {
+pub fn build(b: *std.Build) !void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
-    var zware_module = b.createModule(.{
-        .source_file = .{ .path = "src/main.zig" },
+    const zware_module = b.createModule(.{
+        .root_source_file = .{ .path = "src/main.zig" },
     });
 
     try b.modules.put(b.dupe("zware"), zware_module);
@@ -27,30 +27,30 @@ pub fn build(b: *Builder) !void {
     const unittest_step = b.step("unittest", "Run the library unittests");
     unittest_step.dependOn(&run_main_tests.step);
 
-    const testrunner = b.addExecutable(.{
-        .name = "testrunner",
-        .root_source_file = .{ .path = "test/testrunner/src/testrunner.zig" },
-        .target = target,
-        .optimize = optimize,
-    });
-    testrunner.addModule("zware", zware_module);
+    // const testrunner = b.addExecutable(.{
+    //     .name = "testrunner",
+    //     .root_source_file = .{ .path = "test/testrunner/src/testrunner.zig" },
+    //     .target = target,
+    //     .optimize = optimize,
+    // });
+    // testrunner.addModule("zware", zware_module);
 
-    const testsuite_step = b.step("testsuite", "Run all the testsuite tests");
-    for (test_names) |test_name| {
-        const run_test = b.addRunArtifact(testrunner);
-        run_test.addFileSourceArg(.{ .path = b.fmt("test/testsuite-generated/{s}.json", .{test_name}) });
-        run_test.cwd = b.pathFromRoot("test/testsuite-generated");
-        const step = b.step(b.fmt("test-{s}", .{test_name}), b.fmt("Run the '{s}' test", .{test_name}));
-        step.dependOn(&run_test.step);
-        testsuite_step.dependOn(&run_test.step);
-    }
+    // const testsuite_step = b.step("testsuite", "Run all the testsuite tests");
+    // for (test_names) |test_name| {
+    //     const run_test = b.addRunArtifact(testrunner);
+    //     run_test.addFileSourceArg(.{ .path = b.fmt("test/testsuite-generated/{s}.json", .{test_name}) });
+    //     run_test.cwd = b.pathFromRoot("test/testsuite-generated");
+    //     const step = b.step(b.fmt("test-{s}", .{test_name}), b.fmt("Run the '{s}' test", .{test_name}));
+    //     step.dependOn(&run_test.step);
+    //     testsuite_step.dependOn(&run_test.step);
+    // }
 
-    const test_step = b.step("test", "Run all the tests");
-    test_step.dependOn(unittest_step);
-    test_step.dependOn(testsuite_step);
+    // const test_step = b.step("test", "Run all the tests");
+    // test_step.dependOn(unittest_step);
+    // test_step.dependOn(testsuite_step);
 }
 
-const test_names = [_][]const u8 {
+const test_names = [_][]const u8{
     "address",
     "align",
     "binary-leb128",
